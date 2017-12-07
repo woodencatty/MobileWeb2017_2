@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var http = require('http');
 
 
 let serverIP = "";
@@ -35,7 +36,11 @@ router.get('/dashboard', function(req, res, next) {
   res.render('dashboard', {  });
 });
 
-router.get('/devicelist', function(req, res, next) {
+router.get('/device', function(req, res, next) {
+  res.render('device', {  });
+});
+
+router.get('/account', function(req, res, next) {
   res.render('devicelist', {  });
 });
 
