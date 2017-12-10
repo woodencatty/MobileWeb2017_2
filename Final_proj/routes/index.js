@@ -9,11 +9,15 @@ let serverPort = "";
 function Setup_device_Socket(){
   http.createServer((request, response) => {
     if (request.method == 'POST') {
-      if (request.url == '/identify/information') {
+      if (request.url == '/device/information') {
         IDD_ID = request.headers.idd_id;
         response.writeHead(200);
         response.end("gotit");    //IDD에 확인메세지 전송
         console.log("Hi! "+ IDD_ID);   //환자 식별
+      }
+      if (request.url == '/device/leave') {
+        response.writeHead(200);
+        response.end("gotit. bye");    //IDD에 확인메세지 전송
       }
       else {
         console.log("error");
