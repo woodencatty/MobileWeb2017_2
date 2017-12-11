@@ -33,7 +33,7 @@ router.get('/', function(req, res, next) { //로그인
   res.render('login', { });
 });
 
-router.get('/', function(req, res, next) { //회원가입
+router.get('/join', function(req, res, next) { //회원가입
   res.render('join', { });
 });
 
