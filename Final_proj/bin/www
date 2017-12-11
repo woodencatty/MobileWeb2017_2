@@ -89,3 +89,44 @@ function onListening() {
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
 }
+
+//기기 탐색 소켓
+function Setup_device_Socket(){
+  http.createServer((request, response) => {
+    if (request.method == 'POST') {
+      if (request.url == '/device/information') {
+         client.query('INSERT INTO SearchedDevice (deviceid, version, sort, ipv4, describe) VALUES (?,?,?,?,?)', [request.headers.device_id, request.headers.version, request.headers.sort, request.connection.remoteAddress, request.headers.describe], (err) => {
+          if (err) {
+              console.log(err);
+              console.log("DB query Error!");
+              response.writeHead(404);
+              response.end();
+          } else {
+              console.log("SUCCESS");
+              response.writeHead(200);
+              response.end();
+          }
+      });
+         response.writeHead(200);
+        response.end("gotit");    //기기 확인메세지 전송
+        console.log("Hi! "+ Device_ID);   //기기 식별
+
+      }
+      if (request.url == '/device/leave') {
+        response.writeHead(200);
+        response.end("gotit. bye");    //기기 확인메세지 전송
+      }
+      else {
+        console.log("error");
+        response.writeHead(404);
+        response.end();
+      }
+    } /* GET method */
+  }).listen(3010, () => {
+    console.log('Socket is Running (3010) ...');
+  });
+}
+
+Setup_device_Socket();    
+
+

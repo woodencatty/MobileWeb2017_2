@@ -18,7 +18,7 @@ POST_DeviceOut = {														//POST요청 JSON데이터 정의
 };
 
 module.exports = {
-	SubmitDeviceName: (ID) => {
+	SubmitDeviceName: (ID, version, sort, describe) => {
 		SubmitDeviceNamecallback = function (response) {
 			console.log('HTTP Response Code : ' + response.statusCode);		//리턴코드를 분석하여 상태 확인
 			if (response.statusCode != 200) {
@@ -44,6 +44,10 @@ module.exports = {
 
 		});
 		req.setHeader("device_id", ID);											//헤더에 요청 데이터 첨부
+		req.setHeader("version", version);											//헤더에 요청 데이터 첨부
+		req.setHeader("sort", sort);													//헤더에 요청 데이터 첨부
+		req.setHeader("describe", describe);											//헤더에 요청 데이터 첨부
+		
 		console.log("message send!");
 		req.end();
 	},

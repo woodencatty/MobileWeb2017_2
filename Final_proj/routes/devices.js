@@ -6,8 +6,13 @@ router.get('/', function(req, res, next) {
   res.send('respond with a resource');
 });
 
-router.get('/account', function(req, res, next) {//계정 목록
-  res.render('account', {  });
+router.get('/dashboard', function(req, res, next) { //메인화면
+  res.render('dashboard', {  });
 });
+
+router.get('/device', function(req, res, next) {//기기 목록
+  res.render('device', {  });
+});
+
 
 module.exports = router;

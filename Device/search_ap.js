@@ -15,7 +15,7 @@ module.exports = {
             console.log(curcon[0].signal_level);
             //todo : check signal
             if (curcon[0].signal_level > connectRange && searched == false) {
-                sendData.SubmitDeviceName('LED001');
+                sendData.SubmitDeviceName('LED001', "1.0", "LED", "LED전등");
                 searched = true;
             }
             if (curcon[0].signal_level < leaveRange && searched == true) {
