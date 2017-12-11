@@ -8,7 +8,10 @@ CREATE TABLE `Device` (
   `activated` tinyint(1) NOT NULL,
   `ipv4` varchar(45) DEFAULT NULL,
   `describe` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`deviceid`)
+  `owner` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`deviceid`),
+   KEY `FK_owner` (`owner`),
+  CONSTRAINT `FK_owner` FOREIGN KEY (`owner`) REFERENCES `User` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `User`;
@@ -19,7 +22,6 @@ CREATE TABLE `User` (
   `password` varchar(45) NOT NULL,
   `email` varchar(45) NOT NULL,
   `nickname` varchar(45) NOT NULL,
-  `isAdmin`  tinyint(1) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

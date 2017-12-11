@@ -1,6 +1,15 @@
 var express = require('express');
 var router = express.Router();
+const mysql = require('mysql');
 
+
+const client = mysql.createConnection({
+  host: 'localhost',
+  port: 3306,
+  user: 'localuser',
+  password: '1111',
+  database: 'web'
+});
 
 /* GET home page. */
 router.get('/', function(req, res, next) { //로그인
