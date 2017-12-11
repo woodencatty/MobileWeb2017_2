@@ -11,6 +11,16 @@ const client = mysql.createConnection({
   database: 'web'
 });
 
+/*
+const client = mysql.createConnection({
+  host: 'localhost',
+  port: 3306,
+  user: 'root',
+  password: '1q2w3e4r',
+  database: 'web'
+});
+*/
+
 /* GET home page. */
 router.get('/', function(req, res, next) { //로그인
   res.render('login', { });
