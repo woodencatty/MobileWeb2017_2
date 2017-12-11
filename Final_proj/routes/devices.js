@@ -2,7 +2,6 @@ var express = require('express');
 var router = express.Router();
 const mysql = require('mysql');
 
-
 const client = mysql.createConnection({
   host: 'localhost',
   port: 3306,
@@ -10,6 +9,16 @@ const client = mysql.createConnection({
   password: '1111',
   database: 'web'
 });
+
+/*
+const client = mysql.createConnection({
+  host: 'localhost',
+  port: 3306,
+  user: 'root',
+  password: '1q2w3e4r',
+  database: 'web'
+});
+*/
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
