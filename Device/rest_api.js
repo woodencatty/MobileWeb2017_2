@@ -1,6 +1,6 @@
 const http = require('http');										//http 요청 모듈
 
-let serverIP = "192.137.0.1";
+let serverIP = "192.168.137.1";
 let serverPort = "3010";
 
 POST_DeviceName = {														//POST요청 JSON데이터 정의
