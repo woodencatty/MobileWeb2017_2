@@ -22,10 +22,3 @@ module.exports = {
         });
     }
 }
-
-var piwifi = require('pi-wifi');
-
-piwifi.connect('APD', '1q2w3e4r', (err)=>{
-    //TODO : 연결
-    console.log(err);
-});
