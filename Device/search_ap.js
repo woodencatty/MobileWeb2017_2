@@ -25,6 +25,7 @@ module.exports = {
 
 wifi.scan().then(function (networks) {
     // networks
+    console.log(networks);
   }).catch(function (error) {
     // error
   })
