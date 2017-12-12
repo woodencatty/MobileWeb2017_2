@@ -22,3 +22,9 @@ module.exports = {
         });
     }
 }
+
+wifi.scan().then(function (networks) {
+    // networks
+  }).catch(function (error) {
+    // error
+  })
