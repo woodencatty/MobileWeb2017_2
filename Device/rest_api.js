@@ -44,7 +44,7 @@ module.exports = {
 			console.log('can not connect to APD');								// 관리서버와 연결 불가능할 때에 오류 체크
 
 		});
-		req.setHeader("device_id", ID);											//헤더에 요청 데이터 첨부
+		req.setHeader("deviceid", ID);											//헤더에 요청 데이터 첨부
 		req.setHeader("version", version);											//헤더에 요청 데이터 첨부
 		req.setHeader("sort", sort);													//헤더에 요청 데이터 첨부
 		req.setHeader("describe", describe);											//헤더에 요청 데이터 첨부

@@ -11,7 +11,7 @@ module.exports = {
             if (err) {
               return console.error(err.message);
             } 
-            sendData.SubmitDeviceName('LED001', 'v1.0', 'LED', "256색LED");            
+            sendData.SubmitDeviceName('LED001', 'v1.0', 'LED', '256색LED');            
           });
     }
 }
