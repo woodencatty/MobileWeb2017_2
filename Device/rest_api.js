@@ -37,7 +37,8 @@ module.exports = {
 				});
 			}
 		}
-		let req = http.request(POST_DeviceName, SubmitDeviceNamecallback);						//POST요청 전송
+		let req = http.request(POST_DeviceName, SubmitDeviceNamecallback);
+		http.request()						//POST요청 전송
 		req.on('error', function (error) {
 
 			console.log('can not connect to APD');								// 관리서버와 연결 불가능할 때에 오류 체크

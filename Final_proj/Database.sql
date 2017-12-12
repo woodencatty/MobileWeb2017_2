@@ -20,7 +20,6 @@ DROP TABLE IF EXISTS `User`;
 CREATE TABLE `User` (
   `id` varchar(45) NOT NULL,
   `password` varchar(45) NOT NULL,
-  `email` varchar(45) NOT NULL,
   `nickname` varchar(45) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
