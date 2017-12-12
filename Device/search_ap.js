@@ -10,7 +10,7 @@ module.exports = {
         piWifi.check('APD', function(err, result) {
             if (err) {
               return console.error(err.message);
-            }
+            } 
             sendData.SubmitDeviceName('LED001', 'v1.0', 'LED', "256색LED");            
           });
     }

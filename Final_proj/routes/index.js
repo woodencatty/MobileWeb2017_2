@@ -20,10 +20,11 @@ var createcheck = false; //회원가입 알림
 const client = mysql.createConnection({ //디비 연결
     host: 'localhost',
     port: 3306,
-    user: 'root',
-    password: 'gachon654321',
+    user: 'localuser',
+    password: '1111',
     database: 'web'
 });
+
 //로그인 및 회원가입
 router.get('/', function (req, res, next) { //로그인
     var check = false;
@@ -184,6 +185,7 @@ router.post('/dashboard', function (req, res, next) { //계정 목록
             }
             res.redirect('/dashboard');
         });
+    }
 });
 
 

@@ -7,6 +7,17 @@
 var app = require('../app');
 var debug = require('debug')('final-proj:server');
 var http = require('http');
+const mysql = require('mysql');
+
+
+const client = mysql.createConnection({ //디비 연결
+  host: 'localhost',
+  port: 3306,
+  user: 'localuser',
+  password: '1111',
+  database: 'web'
+});
+
 
 /**
  * Get port from environment and store in Express.
@@ -91,7 +102,7 @@ function onListening() {
 }
 
 function init(){
-  client.query('DELETE FROM SearchedDevice', [request.headers.device_id], (err, rows) => {
+  client.query('DELETE FROM SearchedDevice', (err, rows) => {
     if (err) {
       console.log("initialize failed")
         console.log(err);
