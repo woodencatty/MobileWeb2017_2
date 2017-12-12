@@ -4,8 +4,8 @@ let serverIP = "192.168.137.1";
 let serverPort = "3010";
 
 POST_DeviceName = {														//POST요청 JSON데이터 정의
-	host: serverIP,
-	port: serverPort,
+	host: "192.168.137.1",
+	port: "3010",
 	path: '/device/information',
 	method: 'POST'
 };
