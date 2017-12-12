@@ -52,7 +52,7 @@ module.exports = {
 		console.log("message send!");
 		req.end();
 	},
-	SubmitDeviceOut: () => {
+	SubmitDeviceOut: (ID) => {
 		SubmitDeviceOutcallback = function (response) {
 			console.log('HTTP Response Code : ' + response.statusCode);		//리턴코드를 분석하여 상태 확인
 			if (response.statusCode != 200) {

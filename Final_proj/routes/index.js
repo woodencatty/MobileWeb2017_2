@@ -153,23 +153,49 @@ router.get('/dashboard', function (req, res, next) { //메인화면
             logincheck = true;
             res.redirect('/');;
         } else { //일치하는 id가 있다면
-            req.session.now = (new Date()).toUTCString();
-            res.render('dashboard', {
-                username: rows[0].nickname
+            client.query('SELECT * FROM SearchedDevice', (err, sch_device_rows) => {
+                client.query('SELECT * FROM Device WHERE owner=?', [req.session.user_id], (err, reg_device_rows) => {
+                    req.session.now = (new Date()).toUTCString();
+                    res.render('dashboard', {
+                        sch_device_data: sch_device_rows,
+                        reg_device_data: reg_device_rows,
+                        username: rows[0].nickname,
+                        userid: rows[0].id
+                    });
+                });
             });
         }
     });
-
 });
+
+router.post('/dashboard', function (req, res, next) { //계정 목록
+    var body = req.body;
+    if (body.type == 'delete') {
+        client.query('DELETE FROM Device WHERE deviceid = ?', [body.deviceid], (err, rows) => {
+            if (err) {
+                console.log(err);
+            }
+            res.redirect('/dashboard');
+        });
+    }else if (body.type == 'register') {
+        client.query('INSERT INTO Device(deviceid,version,sort,activated,ipv4,describe,owner) VALUES (?,?,?,?,?,?,?)', [body.deviceid, body.version, body.sort, 0, body.ipv4, body.describe, body.owner], (err, rows) => {
+            if (err) {
+                console.log(err);
+            }
+            res.redirect('/dashboard');
+        });
+});
+
+
 router.get('/device', function (req, res, next) { //기기 목록
-    client.query('SELECT * FROM User WHERE id = ?', [req.session.user_id], (err, rows) => { //입력한 아이디가 DB에 있는지 체크
+    client.query('SELECT * FROM User WHERE id = ?', [req.session.user_id], (err, user_rows) => { //입력한 아이디가 DB에 있는지 체크
         if (!rows.length) { //일치하는 id가 없다면
             logincheck = true;
             res.redirect('/');;
         } else { //일치하는 id가 있다면
             req.session.now = (new Date()).toUTCString();
             res.render('device', {
-                username: rows[0].nickname
+                username: user_rows[0].nickname
             });
         }
     });
@@ -213,7 +239,7 @@ router.post('/account', function (req, res, next) { //계정 목록
         req.session.admin = true;
         res.redirect('/account');;
     }
-    if(body.type == 'delete'){
+    if (body.type == 'delete') {
         client.query('DELETE FROM User WHERE id = ?', [body.id], (err, rows) => {
             if (err) {
                 console.log(err);
