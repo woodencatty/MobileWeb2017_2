@@ -151,7 +151,7 @@ router.get('/dashboard', function (req, res, next) { //메인화면
     client.query('SELECT * FROM User WHERE id = ?', [req.session.user_id], (err, rows) => { //입력한 아이디가 DB에 있는지 체크
         if (!rows.length) { //일치하는 id가 없다면
             logincheck = true;
-            res.redirect('/');;
+            res.redirect('/');
         } else { //일치하는 id가 있다면
             client.query('SELECT * FROM SearchedDevice', (err, sch_device_rows) => {
                 client.query('SELECT * FROM Device WHERE owner=?', [req.session.user_id], (err, reg_device_rows) => {
