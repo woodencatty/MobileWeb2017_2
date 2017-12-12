@@ -35,24 +35,51 @@
 
 <body>
 
+    <body>
+    <% if (dbcheck) { %>
+ 	    <script>
+            alert("중요정보를 입력하지 않았습니다.");
+        </script>
+    <% } %>
+    <% if (passcheck) { %>
+ 	    <script>
+            alert("비밀번호와 확인문자가 서로 다릅니다.");
+        </script>
+    <% } %>
+    <% if (logincheck) { %>
+ 	    <script>
+            alert("중복된 아이디입니다.");
+        </script>
+    <% } %>
+    <% if (countcheck) { %>
+ 	    <script>
+            alert("허용된 문자수를 넘겼습니다");
+        </script>
+    <% } %>
     <div class="container">
         <div class="row">
             <div class="col-md-4 col-md-offset-4">
                 <div class="login-panel panel panel-default">
                     <div class="panel-heading">
-                        <h3 class="panel-title">USER LOGIN</h3>
+                        <h3 class="panel-title">회원가입</h3>
                     </div>
                     <div class="panel-body">
-                        <form role="form">
+                        <form role="form" method="post">
                             <fieldset>
                                 <div class="form-group">
-                                    <input class="form-control" placeholder="ID" name="id" type="text" autofocus>
+                                    <input class="form-control" placeholder="아이디(이메일)" name="id" type="text" autofocus>
                                 </div>
                                 <div class="form-group">
-                                    <input class="form-control" placeholder="Password" name="password" type="password" value="">
+                                    <input class="form-control" placeholder="비밀번호" name="password" type="password" value="">
+                                </div>
+                                <div class="form-group">
+                                    <input class="form-control" placeholder="비밀번호 확인" name="passwordcheck" type="password" value="">
+                                </div>
+                                <div class="form-group">
+                                    <input class="form-control" placeholder="닉네임" name="nickname" type="text" value="">
                                 </div>
                                 <!-- Change this to a button or input when using this as a form -->
-                                <a href="/dashboard" class="btn btn-lg btn-success btn-block">Login</a>
+                                <input class="btn btn-lg btn-success btn-block" type="submit" value="등록하기">
                             </fieldset>
                         </form>
                     </div>
@@ -60,7 +87,6 @@
             </div>
         </div>
     </div>
-
     <!-- jQuery -->
     <script src="../vendor/jquery/jquery.min.js"></script>
 
