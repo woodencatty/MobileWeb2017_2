@@ -8,6 +8,7 @@ CREATE TABLE `Device` (
   `activated` tinyint(1) NOT NULL,
   `ipv4` varchar(45) DEFAULT NULL,
   `describe` varchar(45) DEFAULT NULL,
+  `function` varchar(45) DEFAULT NULL,
   `owner` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`deviceid`),
    KEY `FK_owner` (`owner`),
@@ -33,5 +34,6 @@ CREATE TABLE `SearchedDevice` (
   `sort` varchar(45) NOT NULL,
   `ipv4` varchar(45) DEFAULT NULL,
   `describe` varchar(45) DEFAULT NULL,
+  `function` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`deviceid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

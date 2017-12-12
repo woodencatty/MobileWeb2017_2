@@ -13,7 +13,8 @@ function initialize() {
     var config = JSON.parse(data);    
     scanInterval(config.apName, config.connectRange, config.leaveRange, config.password, config.scanInterval);
   });
-  
 }
+
+
 
 initialize();

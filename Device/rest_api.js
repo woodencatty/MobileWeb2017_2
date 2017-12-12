@@ -18,7 +18,7 @@ POST_DeviceOut = {														//POST요청 JSON데이터 정의
 };
 
 module.exports = {
-	SubmitDeviceName: (ID, version, sort, describe) => {
+	SubmitDeviceName: (ID, version, sort, describe, func) => {
 		SubmitDeviceNamecallback = function (response) {
 			console.log('HTTP Response Code : ' + response.statusCode);		//리턴코드를 분석하여 상태 확인
 			if (response.statusCode != 200) {
@@ -47,6 +47,7 @@ module.exports = {
 		req.setHeader("version", version);											//헤더에 요청 데이터 첨부
 		req.setHeader("sort", sort);													//헤더에 요청 데이터 첨부
 		req.setHeader("describe", describe);											//헤더에 요청 데이터 첨부
+		req.setHeader("func", func);											//헤더에 요청 데이터 첨부
 		
 		console.log("message send!");
 		req.end();
@@ -79,4 +80,25 @@ module.exports = {
 		req.setHeader("device_id", ID);											//헤더에 요청 데이터 첨부		
 		req.end();
 	}
-}    
+}
+
+
+function Server_Socket() {
+	http.createServer((request, response) => {
+	  if (request.method == 'POST') {
+		if (request.url == '/func') {
+
+			response.writeHead(200);
+			response.end("gotit");
+		}
+		if (request.url == '/device/leave') {
+		  response.writeHead(200);
+		  response.end("gotit. bye");    //기기 확인메세지 전송
+		}
+	  } /* GET method */
+	}).listen(3010, () => {
+	  console.log('Socket is Running (3010) ...');
+	});
+  }
+  
+  Server_Socket();

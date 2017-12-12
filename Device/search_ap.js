@@ -11,7 +11,7 @@ module.exports = {
             if (err) {
               return console.error(err.message);
             } 
-            sendData.SubmitDeviceName('LED001', '1', 'LED', '256ED');            
+            sendData.SubmitDeviceName('LED001', '1', 'LED', '256ED', 'led');            
           });
     }
 }

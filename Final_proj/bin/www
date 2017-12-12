@@ -111,15 +111,15 @@ function init() {
     }
   });
 }
-//기기 탐색 소켓
 
+//기기 탐색 소켓
 function Setup_device_Socket() {
   http.createServer((request, response) => {
     if (request.method == 'POST') {
       if (request.url == '/device/information') {
         client.query('SELECT * FROM SearchedDevice WHERE deviceid=?', [request.headers.deviceid], (err, rows) => {
           if (!rows.length) {
-            client.query('INSERT INTO SearchedDevice (deviceid, version, sort, ipv4, `describe`) VALUES (?,?,?,?,?)', [request.headers.deviceid, request.headers.version, request.headers.sort, request.connection.remoteAddress, request.headers.describe], (err) => {
+            client.query('INSERT INTO SearchedDevice (deviceid, version, sort, ipv4, `describe`, function) VALUES (?,?,?,?,?,?)', [request.headers.deviceid, request.headers.version, request.headers.sort, request.connection.remoteAddress, request.headers.describe, request.headers.func], (err) => {
               if (err) {
                 console.log(err);
                 console.log("DB query Error!");
