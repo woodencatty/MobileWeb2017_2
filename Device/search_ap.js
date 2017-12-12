@@ -1,4 +1,4 @@
-const sendData = require('./rest_api.js')   //포스터기기 연결 모듈 import
+const sendData = require('./rest_api.js')   
 
 var wifi = require('node-wifi');
 
@@ -7,7 +7,7 @@ wifi.init({
 });
 
 module.exports = {
-    searchAPD: (apName, password, connectRange, leaveRange) => {
+    searchDevice: () => {
         wifi.getCurrentConnections((err, curcon) => {
             console.log(curcon);
             //todo : check signal
