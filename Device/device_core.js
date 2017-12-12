@@ -8,7 +8,8 @@ function scanInterval(apName, connectRange, leaveRange, password, scanInterval) 
   }
 
 function initialize() {
-  fs.readFile('./settings.conf', 'utf8',(err, data)=> {    
+  fs.readFile('./settings.conf', 'utf8',(err, data)=> {  
+    var config = JSON.parse(data);    
     scanInterval(config.apName, config.connectRange, config.leaveRange, config.password, config.scanInterval);
   });
   
