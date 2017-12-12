@@ -17,50 +17,7 @@ var passcheck = false; // 비밀번호 확인문자가 다를시 알림
 var countcheck = false; // 입력문제가 db제한을 초과하였을때 알림
 var createcheck = false; //회원가입 알림
 
-function Setup_device_Socket(){
-    http.createServer((request, response) => {
-      if (request.method == 'POST') {
-        if (request.url == '/device/information') {
-           client.query('INSERT INTO SearchedDevice (deviceid, version, sort, activated, ipv4, describe) VALUES (?,?,?,?,?,?)', [request.headers.deviceid, request.headers.version, request.headers.sort,0, request.connection.remoteAddress, request.headers.describe], (err) => {
-            if (err) {
-                console.log(err);
-                console.log("DB query Error!");
-                response.writeHead(404);
-                response.end();
-            } else {
-                console.log("SUCCESS");
-                response.writeHead(200);
-                response.end();
-            }
-        });
-           response.writeHead(200);
-          response.end("gotit");    //기기 확인메세지 전송
-          console.log("Hi! "+ Device_ID);   //기기 식별
-  
-        }
-        if (request.url == '/device/leave') {
-          response.writeHead(200);
-          response.end("gotit. bye");    //기기 확인메세지 전송
-          client.query('DELETE FROM SearchedDevice WHERE deviceid = ?', [request.headers.device_id], (err, rows) => {
-            if (err) {
-                console.log(err);
-            }
-        });
-        }
-        else {
-          console.log("error");
-          response.writeHead(404);
-          response.end();
-        }
-      } /* GET method */
-    }).listen(3010, () => {
-      console.log('Socket is Running (3010) ...');
-    });
-  }
-  
-  Setup_device_Socket();    
 
-  
 const client = mysql.createConnection({ //디비 연결
     host: 'localhost',
     port: 3306,
