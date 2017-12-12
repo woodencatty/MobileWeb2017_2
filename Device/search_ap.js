@@ -11,17 +11,7 @@ module.exports = {
             if (err) {
               return console.error(err.message);
             }
-            console.log(result);
+            sendData.SubmitDeviceName('LED001', 'v1.0', 'LED', "256색LED");            
           });
     }
 }
-
-
-/*
-var piwifi = require('pi-wifi');
-
-piwifi.connect('APD', '1q2w3e4r', (err)=>{
-    //TODO : 연결
-});
-*/
-
