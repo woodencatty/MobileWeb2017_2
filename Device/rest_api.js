@@ -3,9 +3,9 @@ const http = require('http');										//http 요청 모듈
 let serverIP = "::ffff:192.168.137.1";
 let serverPort = "3010";
 
-POST_DeviceName = {														//POST요청 JSON데이터 정의
-	host: "192.168.137.1",
-	port: "3010",
+POST_DeviceName = {												//POST요청 JSON데이터 정의
+	host: serverIP,
+	port: serverPort,
 	path: '/device/information',
 	method: 'POST'
 };
@@ -81,24 +81,3 @@ module.exports = {
 		req.end();
 	}
 }
-
-
-function Server_Socket() {
-	http.createServer((request, response) => {
-	  if (request.method == 'POST') {
-		if (request.url == '/func') {
-
-			response.writeHead(200);
-			response.end("gotit");
-		}
-		if (request.url == '/device/leave') {
-		  response.writeHead(200);
-		  response.end("gotit. bye");    //기기 확인메세지 전송
-		}
-	  } /* GET method */
-	}).listen(3010, () => {
-	  console.log('Socket is Running (3010) ...');
-	});
-  }
-  
-  Server_Socket();

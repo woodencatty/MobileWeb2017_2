@@ -1,0 +1,7 @@
+{
+    "deviceName": "LED001",
+    "version": "v1.0",
+    "sort": "LED",
+    "describe": "256ColorLED",
+    "func": "led"
+}

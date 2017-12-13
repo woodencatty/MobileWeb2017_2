@@ -6,12 +6,15 @@ var searched = false;
 const fs = require('fs');
 
 module.exports = {
-    searchDevice: () => {
+    searchServer: () => {
         piWifi.check('APD', function(err, result) {
             if (err) {
               return console.error(err.message);
             } 
-            sendData.SubmitDeviceName('LED001', '1', 'LED', '256ED', 'led');            
+            fs.readFile('./profile.json', 'utf8',(err, data)=> {  
+                var profile = JSON.parse(data);    
+                sendData.SubmitDeviceName(profile.deviceName, profile.version, profile.sort, profile.describe, profile.func);
+              });            
           });
     }
 }

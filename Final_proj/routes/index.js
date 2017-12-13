@@ -5,6 +5,7 @@ const mysql = require('mysql');
 const bodyParser = require('body-parser');
 const crypto = require('crypto');
 const http = require('http');
+const service = require('./service.js');
 
 var key = 'secret'; //암호화 키
 var logincheck = false; //로그인이 되어있는지 체크 아니라면 첫 페이지로 이동
@@ -149,7 +150,7 @@ router.post('/join', function (req, res) { //회원가입
 
 
 //디바이스 관리
-router.get('/dashboard', function (req, res, next) { //메인화면
+router.get('/device', function (req, res, next) { //메인화면
     client.query('SELECT * FROM User WHERE id = ?', [req.session.user_id], (err, rows) => { //입력한 아이디가 DB에 있는지 체크
         if (!rows.length) { //일치하는 id가 없다면
             logincheck = true;
@@ -158,7 +159,7 @@ router.get('/dashboard', function (req, res, next) { //메인화면
             client.query('SELECT * FROM SearchedDevice', (err, sch_device_rows) => {
                 client.query('SELECT * FROM Device WHERE owner=?', [req.session.user_id], (err, reg_device_rows) => {
                     req.session.now = (new Date()).toUTCString();
-                    res.render('dashboard', {
+                    res.render('device', {
                         sch_device_data: sch_device_rows,
                         reg_device_data: reg_device_rows,
                         username: rows[0].nickname,
@@ -170,41 +171,67 @@ router.get('/dashboard', function (req, res, next) { //메인화면
     });
 });
 
-router.post('/dashboard', function (req, res, next) { //계정 목록
+router.post('/device', function (req, res, next) { //계정 목록
     var body = req.body;
     if (body.type == 'delete') {
         client.query('DELETE FROM Device WHERE deviceid = ?', [body.deviceid], (err, rows) => {
             if (err) {
                 console.log(err);
             }
-            res.redirect('/dashboard');
+            res.redirect('/device');
         });
     }else if (body.type == 'register') {
         client.query('INSERT INTO Device(deviceid,version,sort,activated,ipv4,`describe`,owner) VALUES (?,?,?,?,?,?,?)', [body.deviceid, body.version, body.sort, 0, body.ipv4, body.describe, body.owner], (err, rows) => {
             if (err) {
                 console.log(err);
             }
-            res.redirect('/dashboard');
+            res.redirect('/device');
         });
     }
 });
 
 
-router.get('/device', function (req, res, next) { //기기 목록
-    client.query('SELECT * FROM User WHERE id = ?', [req.session.user_id], (err, user_rows) => { //입력한 아이디가 DB에 있는지 체크
+//서비스 관리
+router.get('/service', function (req, res, next) { //메인화면
+    client.query('SELECT * FROM User WHERE id = ?', [req.session.user_id], (err, rows) => { //입력한 아이디가 DB에 있는지 체크
         if (!rows.length) { //일치하는 id가 없다면
             logincheck = true;
-            res.redirect('/');;
+            res.redirect('/');
         } else { //일치하는 id가 있다면
-            req.session.now = (new Date()).toUTCString();
-            res.render('device', {
-                username: user_rows[0].nickname
+            client.query('SELECT * FROM SearchedDevice', (err, sch_device_rows) => {
+                client.query('SELECT * FROM Device WHERE owner=?', [req.session.user_id], (err, reg_device_rows) => {
+                    req.session.now = (new Date()).toUTCString();
+                    res.render('service', {
+                        sch_device_data: sch_device_rows,
+                        reg_device_data: reg_device_rows,
+                        username: rows[0].nickname,
+                        userid: rows[0].id
+                    });
+                });
             });
         }
     });
 });
 
-
+router.post('/service', function (req, res, next) { //계정 목록
+    var body = req.body;
+    client.query('SELECT * FROM User WHERE id = ?', [req.session.user_id], (err, rows) => { //입력한 아이디가 DB에 있는지 체크
+        if (!rows.length) { //일치하는 id가 없다면
+            logincheck = true;
+            res.redirect('/');
+        } else { //일치하는 id가 있다면
+    if (body.type == 'detail') {
+        client.query('SELECT * FROM Device WHERE deviceid=?', [body.deviceid], (err, dev_rows) => {
+        req.session.now = (new Date()).toUTCString();
+        res.render('service_detail', {
+            data : dev_rows,
+            userid: rows[0].id            
+        });
+    });
+    }
+}
+});
+});
 
 //계정관리
 

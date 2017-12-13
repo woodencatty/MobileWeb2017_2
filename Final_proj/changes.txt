@@ -1,0 +1,15 @@
+dashboard.ejs 삭제 -> device.ejs에 기능 이식
+    ->index.js 152~228
+
+    사이드메뉴
+
+                            <li>
+                            <a href="/device"><i class="fa fa-th-list fa-fw"></i>기기 관리</a>
+                        </li>
+                        <li>
+                            <a href="/service"><i class="fa fa-dashboard fa-fw"></i>서비스 관리</a>
+                        </li>
+                        <li>
+                            <a href="/account"><i class="fa fa-user fa-fw"></i>계정 설정</a>
+                        </li>
+                        <li>
