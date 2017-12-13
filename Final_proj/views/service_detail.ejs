@@ -134,26 +134,24 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                       <% reg_device_data.forEach(function (item, index) { %> 
                                         <tr class="odd gradeX">
-                                            <td><%= item.deviceid %></td>
-                                            <td><%= item.ipv4 %></td>
-                                            <td><%= item.sort %></td>
-                                            <td><%= item.version %></td>
-                                            <td><%= item.activated %></td>
-                                            <td><%= item.owner %></td>
-                                            <td><%= item.describe %></td>
-                                            <td><%= item.function %></td>
+                                            <td><%= data[0].deviceid %></td>
+                                            <td><%= data[0].ipv4 %></td>
+                                            <td><%= data[0].sort %></td>
+                                            <td><%= data[0].version %></td>
+                                            <td><%= data[0].activated %></td>
+                                            <td><%= data[0].owner %></td>
+                                            <td><%= data[0].describe %></td>
+                                            <td><%= data[0].function %></td>
 
                                             <td>
                                                 <form id="detail" method="post">
-                                                    <input type="hidden" value="<%= item.deviceid %>" name ="deviceid">
+                                                    <input type="hidden" value="<%= data[0].deviceid %>" name ="deviceid">
                                                     <input type="hidden" value="detail" name ="type">
                                                     <input type="submit" value="상세보기">
                                                 </form>
                                             </td>
                                         </tr>
-                                        <% }); %> 
                                     </tbody>
                             </table>
                         </div>

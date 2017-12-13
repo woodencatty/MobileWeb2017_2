@@ -1,5 +1,5 @@
 const scanAP = require('./search_ap.js');
-const scanAP = require('./sensor.js');   
+const sensor = require('./sensor.js');   
 const fs = require('fs');
 
 function scanInterval(scanInterval) {
@@ -20,15 +20,23 @@ function Server_Socket() {
 	http.createServer((request, response) => {
 	  if (request.method == 'GET') {
 		if (request.url == '/func/led') {
-
+			sensor.setLED(request.headers.colorr,request.headers.colorg,request.headers.colorb);
 			response.writeHead(200);
 			response.end("gotit");
 		}else if (request.url == '/func/temp') {
-		  response.writeHead(200);
-		  response.end("gotit.");    //기기 확인메세지 전송
+			gettempcallback = (temp) =>{
+				response.writeHead(200);
+				response.setHeader('temp', temp);				
+				response.end("gotit.");    //기기 확인메세지 전송
+			}				
+			sensor.getTemp(gettempcallback);
 		}else if (request.url == '/func/humi') {
-		  response.writeHead(200);
-		  response.end("gotit.");    //기기 확인메세지 전송
+			gethumicallback = (humi) =>{
+				response.writeHead(200);
+				response.setHeader('humi', humi);				
+				response.end("gotit.");    //기기 확인메세지 전송
+			}				
+			sensor.getHumi(gethumicallback);
 		}
 	  } /* GET method */
 	}).listen(3010, () => {

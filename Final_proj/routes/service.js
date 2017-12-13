@@ -29,7 +29,7 @@ module.exports = {
         HostIP = IP;
 
     },
-    LEDsetting: (status, colorR, colorG, colorB) => {
+    LEDsetting: (colorR, colorG, colorB) => {
         ledsettingcallback = function (response) {
             console.log('HTTP Response Code : ' + response.statusCode);		//리턴코드를 분석하여 상태 확인
             if (response.statusCode != 200) {
@@ -53,11 +53,10 @@ module.exports = {
 
             console.log('can not connect to APD');								// 관리서버와 연결 불가능할 때에 오류 체크
 
-        });
-        req.setHeader("status", status);											//헤더에 요청 데이터 첨부
-        req.setHeader("colorR", colorR);
-        req.setHeader("colorG", colorG);
-        req.setHeader("colorB", colorB);
+        });											//헤더에 요청 데이터 첨부
+        req.setHeader("colorr", colorR);
+        req.setHeader("colorg", colorG);
+        req.setHeader("colorb", colorB);
         
         console.log("message send!");
         req.end();
