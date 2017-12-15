@@ -11,11 +11,11 @@ const mysql = require('mysql');
 
 
 const client = mysql.createConnection({ //디비 연결
-  host: 'localhost',
-  port: 3306,
-  user: 'localuser',
-  password: '1111',
-  database: 'web'
+    host: 'localhost',
+    port: 3306,
+    user: 'root',
+    password: 'gachon654321',
+    database: 'web'
 });
 
 

@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>ISDM시스템 - 계정 목록</title>
+    <title>ISDM시스템 - 기기 목록</title>
     <!--Basic CSS -->
     <link rel='stylesheet' href='/stylesheets/style.css' />
 
@@ -32,14 +32,39 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
     <script>
-        function formChk(){
+        function del_formChk(){
             alert("삭제가 완료되었습니다.");
+        }
+    </script>  
+
+        <script>
+        function add_formChk(){
+            alert("등록이 완료되었습니다.");
         }
     </script>  
 </head>
 
 <body>
-
+<% if (dbcheck) { %>
+ 	    <script>
+            alert("중요정보를 입력하지 않았습니다.");
+        </script>
+    <% } %>
+    <% if (passcheck) { %>
+ 	    <script>
+            alert("비밀번호와 확인문자가 서로 다릅니다.");
+        </script>
+    <% } %>
+    <% if (logincheck) { %>
+ 	    <script>
+            alert("중복된 아이디입니다.");
+        </script>
+    <% } %>
+    <% if (countcheck) { %>
+ 	    <script>
+            alert("허용된 문자수를 넘겼습니다");
+        </script>
+    <% } %>
     <div id="wrapper">
 
         <!-- Navigation -->
@@ -79,7 +104,7 @@
             <div class="navbar-default sidebar" role="navigation">
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
-                                                <li>
+                        <li>
                             <a href="/device"><i class="fa fa-th-list fa-fw"></i>기기 관리</a>
                         </li>
                         <li>
@@ -101,63 +126,42 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
-                        <h1 class="page-header">ISDM시스템 - 계정설정</h1>
+                        <h1 class="page-header">ISDM시스템 - 정보수정</h1>
                     </div>
-                    <% if (admincheck) { %>
+                    
                     <div class="col-lg-12">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                등록된 기기 현황
-                            </div>
-                            <!-- /.panel-heading -->
-                            <div class="panel-body">
-                                <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
-                                    <thead>
-                                        <tr>
-                                            <th>아이디</th>
-                                            <th>비밀번호</th>
-                                            <th>닉네임</th>
-                                            <th>수정/삭제</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                       <%  data.forEach(function (item, index) { %> 
-                                        <tr class="odd gradeX">
-                                            <td><%= item.id %></td>
-                                            <td><%= item.password %></td>
-                                            <td><%= item.nickname %></td>
-                                            <td>
-                                                <form id="delete" method="post">
-                                                    <input type="hidden" value="<%= item.id %>" name ="id">
-                                                    <input type="hidden" value="delete" name ="type">
-                                                    <input type="submit" value="삭제하기" onClick="javascript:formChk()">
-                                                </form>
-                                            </td>
-                                        </tr>
-                                        <% }); %> 
-                                    </tbody>
-                                </table>
-                            </div>
-                            <!-- /.panel-body -->
-                        </div>
-                        <!-- /.panel -->
-
+                        <div class="container">
+        <div class="row">
+            <div class="col-md-4 col-md-offset-4">
+                <div class="login-panel panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">회원 정보 수정</h3>
                     </div>
-                    <% } else {%>
-                    <div class="col-md-6 col-md-offset-3">
+                    <div class="panel-body">
                         <form role="form" method="post">
                             <fieldset>
                                 <div class="form-group">
-                                    <input class="form-control" placeholder="비밀번호" name="password" type="password" value="">
+                                    <input class="form-control" placeholder="아이디(이메일)" name="id" type="text" value="<%= id %>" readonly>
+                                </div>
+                                <div class="form-group">
+                                    <input class="form-control" placeholder="비밀번호" name="password" type="password" value="<%= password %>">
+                                </div>
+                                <div class="form-group">
+                                    <input class="form-control" placeholder="비밀번호 확인" name="passwordcheck" type="password" value="<%= password %>">
+                                </div>
+                                <div class="form-group">
+                                    <input class="form-control" placeholder="닉네임" name="nickname" type="text" value="<%= nickname %>">
                                 </div>
                                 <!-- Change this to a button or input when using this as a form -->
-                                <input class="btn btn-lg btn-success btn-block" type="submit" value="확인">
+                                <input class="btn btn-lg btn-success btn-block" type="submit" value="수정하기">
                             </fieldset>
                         </form>
-
                     </div>
-                    
-                    <% } %>
+                </div>
+            </div>
+        </div>
+    </div>
+                    </div>
                     <!-- /.col-lg-12 -->
                 </div>
                 <!-- /.row -->

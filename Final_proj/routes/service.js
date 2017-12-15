@@ -4,22 +4,22 @@ let HostIP = "";
 let HostPort = "3010";
 
 SET_LED = {														//POST요청 JSON데이터 정의
-    host: serverIP,
-    port: serverPort,
+    host: HostIP,
+    port: HostPort,
     path: '/func/led',
     method: 'GET'
 };
 
 GET_TEMP = {														//POST요청 JSON데이터 정의
-    host: serverIP,
-    port: serverPort,
+    host: HostIP,
+    port: HostPort,
     path: '/func/temp',
     method: 'GET'
 };
 
 GET_HUMI = {														//POST요청 JSON데이터 정의
-    host: serverIP,
-    port: serverPort,
+    host: HostIP,
+    port: HostPort,
     path: '/func/humi',
     method: 'GET'
 };

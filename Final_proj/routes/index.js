@@ -22,8 +22,8 @@ var createcheck = false; //회원가입 알림
 const client = mysql.createConnection({ //디비 연결
     host: 'localhost',
     port: 3306,
-    user: 'localuser',
-    password: '1111',
+    user: 'root',
+    password: 'gachon654321',
     database: 'web'
 });
 
@@ -69,7 +69,7 @@ router.post('/', function (req, res) { //로그인
             encpass += enc.final('base64');
             if (encpass == rows[0].password) {
                 req.session.user_id = rows[0].id; //로그인 유지 세션
-                res.redirect('/dashboard');
+                res.redirect('/device');
             } else { //비밀번호를 잘못입력
                 loginerrcheck = true;
                 res.redirect('/');;
@@ -78,7 +78,8 @@ router.post('/', function (req, res) { //로그인
     });
 });
 
-router.get('/logout', (req, res, next) => {//로그아웃
+//로그아웃
+router.get('/logout', (req, res, next) => {
     req.session.destroy(function () {
         req.session;
     });
@@ -234,8 +235,6 @@ router.post('/service', function (req, res, next) { //계정 목록
 });
 
 //계정관리
-
-
 router.get('/account', function (req, res, next) { //계정 목록
     client.query('SELECT * FROM User WHERE id = ?', [req.session.user_id], (err, rows) => { //입력한 아이디가 DB에 있는지 체크
         if (!rows.length) { //일치하는 id가 없다면
@@ -277,6 +276,96 @@ router.post('/account', function (req, res, next) { //계정 목록
             res.redirect('/account');
         });
     }
+});
+
+//회원정보 수정
+router.get('/change', function (req, res, next) { //회원정보 수정
+    var check = false;
+    if (dbcheck) { //중요정보를 입력하였는지 체크
+        check = true;
+        dbcheck = false;
+    }
+    var pcheck = false;
+    if (passcheck) { //비밀번호확인문자가 다르면 체크
+        pcheck = true;
+        passcheck = false;
+    }
+    var lcheck = false;
+    if (logincheck) { //아이디 중복체크
+        lcheck = true;
+        logincheck = false;
+    }
+    var ocheck = false;
+    if (countcheck) { //글자수 체크
+        ocheck = true;
+        countcheck = false;
+    }
+    client.query('SELECT * FROM User WHERE id = ?', [req.session.user_id], (err, rows) => { //수정할 유저 정보 불러오기
+        if (!rows.length) { //일치하는 id가 없다면
+            logincheck = true;
+            res.redirect('/');;
+        } else { //일치하는 id가 있다면
+            var dec = crypto.createDecipher('aes192', key);
+            var decpass = dec.update(rows[0].password, 'base64', 'utf8');
+            decpass += dec.final('utf8');
+            req.session.now = (new Date()).toUTCString();
+            res.render('change', {
+                username: rows[0].nickname,
+                id: rows[0].id,
+                password: decpass,
+                nickname: rows[0].nickname,
+                dbcheck: check,
+                passcheck: pcheck,
+                countcheck: ocheck,
+                logincheck: lcheck
+            });
+        }
+    });
+});
+router.post('/change', function (req, res) { //정보수정
+    var body = req.body;
+    console.log(body);
+    if (body.password != body.passwordcheck) { //비밀번호 확인문자 체크
+        passcheck = true;
+        res.redirect('/join');
+    } else if (body.password != '' && body.passwordcheck != '' && body.nickname != '') { //입력정보 체크
+        var enc = crypto.createCipher('aes192', key);
+        var encpass = enc.update(body.password, 'utf8', 'base64');
+        encpass += enc.final('base64');
+        client.query('UPDATE User SET password=?, nickname=? WHERE id=?', [encpass, body.nickname, req.session.user_id], (err, rows) => {
+            if (err) {
+                errcheck = true;
+                res.redirect('/change');
+            } else {
+                req.session.deviceNumber = null;
+                res.redirect('/device');
+            }
+        });
+    } else {
+        dbcheck = true;
+        res.redirect('/change');
+    }
+});
+
+//유저 프로필
+router.get('/profile', function (req, res, next) { //프로필
+    client.query('SELECT * FROM User WHERE id = ?', [req.session.user_id], (err, rows) => { //입력한 아이디가 DB에 있는지 체크
+        if (!rows.length) { //일치하는 id가 없다면
+            logincheck = true;
+            res.redirect('/');
+        } else { //일치하는 id가 있다면
+                client.query('SELECT * FROM Device WHERE owner=?', [req.session.user_id], (err, reg_device_rows) => {
+                    req.session.now = (new Date()).toUTCString();
+                    res.render('profile', {
+                        reg_device_data: reg_device_rows,
+                        username: rows[0].nickname,
+                        userid: rows[0].id,
+                        id: rows[0].id,
+                        nickname: rows[0].nickname
+                    });
+                });
+        }
+    });
 });
 
 
