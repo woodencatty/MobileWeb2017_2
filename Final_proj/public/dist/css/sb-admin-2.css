@@ -11,8 +11,7 @@ body {
   width: 100%;
 }
 #page-wrapper {
-  padding: 0 15px;
-  min-height: 568px;
+  min-height: 568px;  
   background-color: white;
 }
 @media (min-width: 768px) {
@@ -431,5 +430,21 @@ table.dataTable thead .sorting:after {
     left: -14px;
     border-right-width: 14px;
     border-left-width: 0;
+  }
+}
+
+@media (max-width : 768px){
+  #wrapper {
+    width: 140%;
+    margin: -3em -3em -3em -3em;
+  }
+  .smaller_on_phone{
+  font-size: 2em;
+  }
+  .hide_on_phone{
+    display: none;
+    }  
+  .inline_on_phone{
+    display: inline;
   }
 }

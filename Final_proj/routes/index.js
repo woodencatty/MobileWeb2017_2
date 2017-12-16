@@ -182,7 +182,7 @@ router.post('/device', function (req, res, next) { //계정 목록
             res.redirect('/device');
         });
     }else if (body.type == 'register') {
-        client.query('INSERT INTO Device(deviceid,version,sort,activated,ipv4,`describe`,owner) VALUES (?,?,?,?,?,?,?)', [body.deviceid, body.version, body.sort, 0, body.ipv4, body.describe, body.owner], (err, rows) => {
+        client.query('INSERT INTO Device(deviceid,version,sort,activated,ipv4,`describe`,owner, function) VALUES (?,?,?,?,?,?,?,?)', [body.deviceid, body.version, body.sort, 0, body.ipv4, body.describe, body.owner, body.func], (err, rows) => {
             if (err) {
                 console.log(err);
             }
