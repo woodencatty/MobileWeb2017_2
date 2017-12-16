@@ -15,6 +15,17 @@ gpio.softPwmCreate(LEDR, 0, 255);
 gpio.softPwmCreate(LEDG, 0, 255);
 gpio.softPwmCreate(LEDB, 0, 255);
 
+var light = 0;
+
+setInterval(()=>{
+    gpio.softPwmWrite(LEDR, light);
+    if(light < 255){
+        light = light + 10;
+    }else {
+        light = 0;
+    }
+}, 100)
+
 module.exports = {
     getTemp: (callback)=>{
         dhtsensor.read(22, dht22GPIO, function(err, temperature, humidity) {
