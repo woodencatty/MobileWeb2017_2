@@ -237,16 +237,22 @@ router.get('/service_detail', function (req, res, next) { //메인화면
         } else { //일치하는 id가 있다면
                 client.query('SELECT * FROM Device WHERE deviceid=?', [req.session.deviceid], (err, dev_rows) => {
                     req.session.now = (new Date()).toUTCString();
-                    service.getHostIP(dev_rows.ipv4);
+                    service.getHostIP(dev_rows[0].ipv4);
+                    console.log(dev_rows[0].ipv4);
                     tempcallback = (temp)=>{ 
-                    res.render('service_detail', {
+                   /* res.render('service_detail', {
                         data: dev_rows,
                         username: rows[0].nickname,
                         userid: rows[0].id,
                         temp: temp
-                    });     
+                    });     */
                     }
-                   service.TEMPget(); // 기기에 온도 측정 결과 요청
+                    res.render('service_detail', {
+                        data: dev_rows,
+                        username: rows[0].nickname,
+                        userid: rows[0].id,
+                    });     
+                   //service.TEMPget(); // 기기에 온도 측정 결과 요청
                 });
         }
     });
@@ -265,7 +271,7 @@ router.post('/service_detail', function (req, res, next) { //메인화면
                 req.session.now = (new Date()).toUTCString();
                 req.session.deviceid = body.deviceid;
                 service.LEDsetting(RGB[0], RGB[1], RGB[2]);
-                res.redirect('/service_detail');
+                res.redirect('/service');
             });
         }
     });

@@ -27,7 +27,10 @@ GET_HUMI = {														//POST요청 JSON데이터 정의
 module.exports = {
     getHostIP: (IP) => {
         HostIP = IP;
-
+        SET_LED.host = IP;
+        GET_TEMP.host = IP;
+        GET_HUMI.host = IP;
+        console.log(IP);
     },
     LEDsetting: (colorR, colorG, colorB) => {
         ledsettingcallback = function (response) {
@@ -48,6 +51,7 @@ module.exports = {
                 });
             }
         }
+        console.log(SET_LED);
         let req = http.request(SET_LED, ledsettingcallback);
         req.on('error', function (error) {
 
@@ -88,7 +92,6 @@ module.exports = {
           console.log('can not connect to APD');								// 관리서버와 연결 불가능할 때에 오류 체크
 
       });
-      req.setHeader("deviceid", ID);											//헤더에 요청 데이터 첨부
       
       console.log("message send!");
       req.end();
@@ -120,7 +123,6 @@ module.exports = {
       console.log('can not connect to APD');								// 관리서버와 연결 불가능할 때에 오류 체크
 
   });
-  req.setHeader("deviceid", ID);											//헤더에 요청 데이터 첨부
   
   console.log("message send!");
   req.end();
