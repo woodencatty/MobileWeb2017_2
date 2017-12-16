@@ -7,9 +7,9 @@ const LEDG = 28;
 const LEDB = 29;
 
 gpio.wiringPiSetup();
-gpio.pinMode(LEDR, wpi.PWM_OUTPUT);
-gpio.pinMode(LEDG, wpi.PWM_OUTPUT);
-gpio.pinMode(LEDB, wpi.PWM_OUTPUT);
+gpio.pinMode(LEDR, PWM_OUTPUT);
+gpio.pinMode(LEDG, PWM_OUTPUT);
+gpio.pinMode(LEDB, PWM_OUTPUT);
 
 gpio.softPwmCreate(LEDR, 0, 255);
 gpio.softPwmCreate(LEDG, 0, 255);
