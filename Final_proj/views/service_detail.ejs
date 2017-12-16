@@ -13,6 +13,8 @@
     <!--Basic CSS -->
     <link rel='stylesheet' href='/stylesheets/style.css' />
 
+	<link type="text/css" rel="stylesheet" href="../css/wheelcolorpicker.css" />
+
     <!-- Bootstrap Core CSS -->
     <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
@@ -122,12 +124,15 @@
                                 <thead>
                                     <tr>
                                         <th>기기 이름</th>
+                                        <th>LED 색 설정</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                         <tr class="odd gradeX">
                                             <td><%= data[0].deviceid %></td>
-                                            
+                                            <td>	<div class="col-4">
+	                                            	<input type="text" data-wheelcolorpicker="" data-wcp-format="rgb">
+	                                                </div></td>
                                             <td>
                                                 <form id="detail" method="post">
                                                     <input type="hidden" value="<%= data[0].deviceid %>" name ="deviceid">
@@ -167,6 +172,8 @@
     <!-- Custom Theme JavaScript -->
     <script src="../dist/js/sb-admin-2.js"></script>
 
+    <!-- Custom colorPicker -->
+<script type="text/javascript" src="../dist/js/jquery.wheelcolorpicker.js"></script>
 </body>
 
 </html>
