@@ -15,7 +15,6 @@ gpio.softPwmCreate(LEDR, 0, 255);
 gpio.softPwmCreate(LEDG, 0, 255);
 gpio.softPwmCreate(LEDB, 0, 255);
 
-const dht22GPIO = 18;
 
 setInterval(function () {
     ledR.pwmWrite(dutyCycle);
