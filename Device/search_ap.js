@@ -12,6 +12,7 @@ module.exports = {
               return console.error(err.message);
             } 
             fs.readFile('./profile.json', 'utf8',(err, data)=> {  
+                console.log("Found Server");
                 var profile = JSON.parse(data);    
                 sendData.SubmitDeviceName(profile.deviceName, profile.version, profile.sort, profile.describe, profile.func);
               });            

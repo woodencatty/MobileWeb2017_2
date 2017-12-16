@@ -4,7 +4,8 @@ const fs = require('fs');
 
 function scanInterval(scanInterval) {
     this.scanInterval = setInterval(() => {
-      scanAP.searchServer();
+			scanAP.searchServer();
+			console.log("scanning..");
     }, scanInterval);
   }
 
