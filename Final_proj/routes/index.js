@@ -240,19 +240,14 @@ router.get('/service_detail', function (req, res, next) { //메인화면
                     service.getHostIP(dev_rows[0].ipv4);
                     console.log(dev_rows[0].ipv4);
                     tempcallback = (temp)=>{ 
-                   /* res.render('service_detail', {
-                        data: dev_rows,
-                        username: rows[0].nickname,
-                        userid: rows[0].id,
-                        temp: temp
-                    });     */
-                    }
                     res.render('service_detail', {
                         data: dev_rows,
                         username: rows[0].nickname,
                         userid: rows[0].id,
+                        temp: temp
                     });     
-                   //service.TEMPget(); // 기기에 온도 측정 결과 요청
+                    }
+                   service.TEMPget(tempcallback); // 기기에 온도 측정 결과 요청
                 });
         }
     });
