@@ -232,6 +232,7 @@ router.post('/service', function (req, res, next) { //계정 목록
 
 
 router.get('/service_detail', function (req, res, next) { //메인화면
+   
     client.query('SELECT * FROM User WHERE id = ?', [req.session.user_id], (err, rows) => { //입력한 아이디가 DB에 있는지 체크
         if (!rows.length) { //일치하는 id가 없다면
             logincheck = true;
@@ -240,11 +241,15 @@ router.get('/service_detail', function (req, res, next) { //메인화면
                 client.query('SELECT * FROM Device WHERE deviceid=?', [req.session.deviceid], (err, dev_rows) => {
                     req.session.now = (new Date()).toUTCString();
                     service.getHostIP(dev_rows.ipv4);
-                    res.render('service_detail', {
-                        data: dev_rows,
-                        username: rows[0].nickname,
-                        userid: rows[0].id
-                    });
+                    tempcallback = (temp)=>{
+                        res.render('service_detail', {
+                            data: dev_rows,
+                            username: rows[0].nickname,
+                            userid: rows[0].id,
+                            temp: temp
+                        });    
+                    }
+                    service.TEMPget();
                 });
         }
     });

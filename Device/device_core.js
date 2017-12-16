@@ -26,16 +26,14 @@ function Server_Socket() {
 			response.end("gotit");
 		}else if (request.url == '/func/temp') {
 			gettempcallback = (temp) =>{
-				response.writeHead(200);
-				response.setHeader('temp', temp);				
-				response.end("gotit.");    //기기 확인메세지 전송
+				response.writeHead(200);				
+				response.end(temp.toString());    //기기 확인메세지 전송
 			}				
 			sensor.getTemp(gettempcallback);
 		}else if (request.url == '/func/humi') {
 			gethumicallback = (humi) =>{
-				response.writeHead(200);
-				response.setHeader('humi', humi);				
-				response.end("gotit.");    //기기 확인메세지 전송
+				response.writeHead(200);				
+				response.end(humi.toString());    //기기 확인메세지 전송
 			}				
 			sensor.getHumi(gethumicallback);
 		}

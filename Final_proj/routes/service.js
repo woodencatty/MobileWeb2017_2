@@ -62,7 +62,7 @@ module.exports = {
         req.end();
     },
 
-    TEMPget : () => {
+    TEMPget : (callback) => {
         tempgetcallback = function (response) {
           console.log('HTTP Response Code : ' + response.statusCode);		//리턴코드를 분석하여 상태 확인
           if (response.statusCode != 200) {
@@ -75,6 +75,7 @@ module.exports = {
               let serverdata = '';
               response.on('data', function (chunk) {							//응답 데이터를 JSON형태로 파싱함
                       console.log("he says " + chunk);
+                      callback(chunk.toString());
               });
               response.on('end', function () {									//응답이 끝났을 시 데이터 추출
                   console.log(serverdata);
@@ -93,7 +94,7 @@ module.exports = {
       req.end();
   },
   
-  HUMIget : () => {
+  HUMIget : (callback) => {
     humigetcallback = function (response) {
       console.log('HTTP Response Code : ' + response.statusCode);		//리턴코드를 분석하여 상태 확인
       if (response.statusCode != 200) {
@@ -106,6 +107,7 @@ module.exports = {
           let serverdata = '';
           response.on('data', function (chunk) {							//응답 데이터를 JSON형태로 파싱함
                   console.log("he says " + chunk);
+                  callback(chunk.toString());
           });
           response.on('end', function () {									//응답이 끝났을 시 데이터 추출
               console.log(serverdata);
