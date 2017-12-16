@@ -160,7 +160,7 @@ router.get('/device', function (req, res, next) { //메인화면
             client.query('SELECT * FROM SearchedDevice', (err, sch_device_rows) => {
                 client.query('SELECT * FROM Device WHERE owner=?', [req.session.user_id], (err, reg_device_rows) => {
                     req.session.now = (new Date()).toUTCString();
-                    res.render('device', {
+                    res.render('device', { // 탐색 기기와 등록 기기를 화면에 보여줌
                         sch_device_data: sch_device_rows,
                         reg_device_data: reg_device_rows,
                         username: rows[0].nickname,
@@ -174,14 +174,14 @@ router.get('/device', function (req, res, next) { //메인화면
 
 router.post('/device', function (req, res, next) { //계정 목록
     var body = req.body;
-    if (body.type == 'delete') {
+    if (body.type == 'delete') { //기기 삭제 버튼 클릭시
         client.query('DELETE FROM Device WHERE deviceid = ?', [body.deviceid], (err, rows) => {
             if (err) {
                 console.log(err);
             }
             res.redirect('/device');
         });
-    }else if (body.type == 'register') {
+    }else if (body.type == 'register') {// 탐색 기기 등록버튼 클릭시
         client.query('INSERT INTO Device(deviceid,version,sort,activated,ipv4,`describe`,owner, function) VALUES (?,?,?,?,?,?,?,?)', [body.deviceid, body.version, body.sort, 0, body.ipv4, body.describe, body.owner, body.func], (err, rows) => {
             if (err) {
                 console.log(err);
@@ -199,17 +199,14 @@ router.get('/service', function (req, res, next) { //메인화면
             logincheck = true;
             res.redirect('/');
         } else { //일치하는 id가 있다면
-            client.query('SELECT * FROM SearchedDevice', (err, sch_device_rows) => {
                 client.query('SELECT * FROM Device WHERE owner=?', [req.session.user_id], (err, reg_device_rows) => {
                     req.session.now = (new Date()).toUTCString();
-                    res.render('service', {
-                        sch_device_data: sch_device_rows,
+                    res.render('service', { // 등록된 기기 목록을 보여줌
                         reg_device_data: reg_device_rows,
                         username: rows[0].nickname,
                         userid: rows[0].id
                     });
                 });
-            });
         }
     });
 });
@@ -221,7 +218,7 @@ router.post('/service', function (req, res, next) { //계정 목록
             logincheck = true;
             res.redirect('/');
         } else { //일치하는 id가 있다면
-    if (body.type == 'detail') {
+    if (body.type == 'detail') {// 상세보기를 클릭했을 시
                 req.session.now = (new Date()).toUTCString();
         req.session.deviceid = body.deviceid;
             res.redirect('/service_detail');
@@ -241,15 +238,15 @@ router.get('/service_detail', function (req, res, next) { //메인화면
                 client.query('SELECT * FROM Device WHERE deviceid=?', [req.session.deviceid], (err, dev_rows) => {
                     req.session.now = (new Date()).toUTCString();
                     service.getHostIP(dev_rows.ipv4);
-                    tempcallback = (temp)=>{
-                        res.render('service_detail', {
-                            data: dev_rows,
-                            username: rows[0].nickname,
-                            userid: rows[0].id,
-                            temp: temp
-                        });    
+                    tempcallback = (temp)=>{ 
+                    res.render('service_detail', {
+                        data: dev_rows,
+                        username: rows[0].nickname,
+                        userid: rows[0].id,
+                        temp: temp
+                    });     
                     }
-                    service.TEMPget();
+                   service.TEMPget(); // 기기에 온도 측정 결과 요청
                 });
         }
     });

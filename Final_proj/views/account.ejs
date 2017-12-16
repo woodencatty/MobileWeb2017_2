@@ -118,7 +118,7 @@
                                     <thead>
                                         <tr>
                                             <th>아이디</th>
-                                            <th>비밀번호</th>
+                                            <th class="hide_on_phone">비밀번호</th>
                                             <th>닉네임</th>
                                             <th>수정/삭제</th>
                                         </tr>
@@ -127,7 +127,7 @@
                                        <%  data.forEach(function (item, index) { %> 
                                         <tr class="odd gradeX">
                                             <td><%= item.id %></td>
-                                            <td><%= item.password %></td>
+                                            <td class="hide_on_phone"><%= item.password %></td>
                                             <td><%= item.nickname %></td>
                                             <td>
                                                 <form id="delete" method="post">
