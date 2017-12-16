@@ -214,27 +214,6 @@ router.get('/service', function (req, res, next) { //메인화면
     });
 });
 
-router.get('/service', function (req, res, next) { //메인화면
-    client.query('SELECT * FROM User WHERE id = ?', [req.session.user_id], (err, rows) => { //입력한 아이디가 DB에 있는지 체크
-        if (!rows.length) { //일치하는 id가 없다면
-            logincheck = true;
-            res.redirect('/');
-        } else { //일치하는 id가 있다면
-            client.query('SELECT * FROM SearchedDevice', (err, sch_device_rows) => {
-                client.query('SELECT * FROM Device WHERE owner=?', [req.session.user_id], (err, reg_device_rows) => {
-                    req.session.now = (new Date()).toUTCString();
-                    res.render('service', {
-                        sch_device_data: sch_device_rows,
-                        reg_device_data: reg_device_rows,
-                        username: rows[0].nickname,
-                        userid: rows[0].id
-                    });
-                });
-            });
-        }
-    });
-});
-
 router.post('/service', function (req, res, next) { //계정 목록
     var body = req.body;
     client.query('SELECT * FROM User WHERE id = ?', [req.session.user_id], (err, rows) => { //입력한 아이디가 DB에 있는지 체크
@@ -243,17 +222,51 @@ router.post('/service', function (req, res, next) { //계정 목록
             res.redirect('/');
         } else { //일치하는 id가 있다면
     if (body.type == 'detail') {
-        client.query('SELECT * FROM Device WHERE deviceid=?', [body.deviceid], (err, dev_rows) => {
-        req.session.now = (new Date()).toUTCString();
-        res.render('service_detail', {
-            data : dev_rows,
-            userid: rows[0].id           
-        });
-    });
+                req.session.now = (new Date()).toUTCString();
+        req.session.deviceid = body.deviceid;
+            res.redirect('service_detail');
     }
 }
 });
 });
+
+
+router.get('/service_detail', function (req, res, next) { //메인화면
+    client.query('SELECT * FROM User WHERE id = ?', [req.session.user_id], (err, rows) => { //입력한 아이디가 DB에 있는지 체크
+        if (!rows.length) { //일치하는 id가 없다면
+            logincheck = true;
+            res.redirect('/');
+        } else { //일치하는 id가 있다면
+                client.query('SELECT * FROM Device WHERE deviceid=?', [req.session.deviceid], (err, dev_rows) => {
+                    req.session.now = (new Date()).toUTCString();
+                    res.render('service_detail', {
+                        data: dev_rows,
+                        username: rows[0].nickname,
+                        userid: rows[0].id
+                    });
+                });
+        }
+    });
+});
+
+
+router.post('/service_detail', function (req, res, next) { //메인화면
+    client.query('SELECT * FROM User WHERE id = ?', [req.session.user_id], (err, rows) => { //입력한 아이디가 DB에 있는지 체크
+        if (!rows.length) { //일치하는 id가 없다면
+            logincheck = true;
+            res.redirect('/');
+        } else { //일치하는 id가 있다면
+            client.query('SELECT * FROM SearchedDevice', (err, sch_device_rows) => {
+                client.query('SELECT * FROM Device WHERE owner=?', [req.session.user_id], (err, reg_device_rows) => {
+                    req.session.now = (new Date()).toUTCString();
+                   
+                });
+            });
+        }
+    });
+});
+
+
 
 //계정관리
 router.get('/account', function (req, res, next) { //계정 목록

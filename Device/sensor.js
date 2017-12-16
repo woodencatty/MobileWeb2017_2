@@ -1,19 +1,22 @@
 var dhtsensor = require('node-dht-sensor');
-var gpio = require('wiring-pi');
+var Gpio = require('pigpio').Gpio,
+ledR = new Gpio(16, {mode: Gpio.OUTPUT}),
+ledG = new Gpio(20, {mode: Gpio.OUTPUT}),
+ledB = new Gpio(21, {mode: Gpio.OUTPUT}),
+dutyCycle = 0;
+
 
 const dht22GPIO = 18;
-const LEDR = 27;
-const LEDG = 28;
-const LEDB = 29;
 
-gpio.wiringPiSetup();
-gpio.pinMode(LEDR, wpi.PWM_OUTPUT);
-gpio.pinMode(LEDG, wpi.PWM_OUTPUT);
-gpio.pinMode(LEDB, wpi.PWM_OUTPUT);
+setInterval(function () {
+    ledR.pwmWrite(dutyCycle);
+    
+     dutyCycle += 5;
+     if (dutyCycle > 255) {
+       dutyCycle = 0;
+     }
 
-gpio.softPwmCreate(LEDR, 0, 255);
-gpio.softPwmCreate(LEDG, 0, 255);
-gpio.softPwmCreate(LEDB, 0, 255);
+    }, 20);
 
 module.exports = {
     getTemp: (callback)=>{
@@ -33,9 +36,9 @@ module.exports = {
          });
     },
     setLED: (R, G, B)=>{
-        gpio.softPwmWrite(LEDR, R);
-        gpio.softPwmWrite(LEDG, G);
-        gpio.softPwmWrite(LEDB, B);
+        ledR.pwmWrite(R);
+        ledG.pwmWrite(G);
+        ledB.pwmWrite(B);
     }
 }
 
