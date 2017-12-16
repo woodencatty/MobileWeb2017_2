@@ -2,9 +2,9 @@ var dhtsensor = require('node-dht-sensor');
 var gpio = require('wiring-pi');
 
 const dht22GPIO = 18;
-const LEDR = 40;
-const LEDG = 38;
-const LEDB = 39;
+const LEDR = 27;
+const LEDG = 28;
+const LEDB = 29;
 
 gpio.wiringPiSetup();
 gpio.pinMode(LEDR, wpi.PWM_OUTPUT);
