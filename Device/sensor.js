@@ -30,9 +30,12 @@ module.exports = {
          });
     },
     setLED: (R, G, B)=>{
-        wpi.pwmWrite(LEDR, parseInt(R, 10));
-        wpi.pwmWrite(LEDG, parseInt(R, 10));
-        wpi.pwmWrite(LEDB, parseInt(R, 10));
+        console.log(R);
+        console.log(G);
+        console.log(B);
+ //       wpi.pwmWrite(LEDR, R);
+ //       wpi.pwmWrite(LEDG, G);
+ //       wpi.pwmWrite(LEDB, B);
         
     }
 }
