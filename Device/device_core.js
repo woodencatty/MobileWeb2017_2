@@ -1,6 +1,7 @@
 const scanAP = require('./search_ap.js');
 const sensor = require('./sensor.js');   
 const fs = require('fs');
+const http = require('http');
 
 function scanInterval(scanInterval) {
     this.scanInterval = setInterval(() => {
